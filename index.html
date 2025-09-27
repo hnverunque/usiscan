@@ -43,11 +43,29 @@
             font-size: clamp(0.8rem, 2vw, 1rem);
         }
 
-        nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        /* Hamburger Button */
+        .menu-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: #085bb5;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        nav {
+            display: none;
+            flex-direction: column;
+            background: #085bb5;
+            text-align: center;
+        }
+
+        nav.show {
+            display: flex;
         }
 
         nav a {
@@ -171,38 +189,14 @@
             font-size: clamp(0.8rem, 2vw, 1rem);
         }
 
-        /* Responsive Tweaks */
-        @media (max-width: 768px) {
+        @media (min-width: 768px) {
             nav {
-                flex-direction: column;
-                align-items: center;
+                display: flex !important;
+                flex-direction: row;
+                justify-content: center;
             }
-
-            .hero {
-                padding: 20px 10px;
-            }
-
-            .feature-boxes {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            section {
-                padding: 30px 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 10px;
-            }
-
-            nav a {
-                padding: 10px;
-            }
-
-            .hero button {
-                width: 100%;
+            .menu-toggle {
+                display: none;
             }
         }
     </style>
@@ -215,9 +209,10 @@
         <h1>UsiScan</h1>
         <p>Verify Health Products & Traditional Practices Online</p>
     </span>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
 </header>
 
-<nav>
+<nav id="navbar">
     <a href="index.html">Home</a>
     <a href="#features">Features</a>
     <a href="#scan">Scan Product</a>
@@ -283,6 +278,10 @@
 </footer>
 
 <script>
+    function toggleMenu() {
+        document.getElementById("navbar").classList.toggle("show");
+    }
+
     // Scroll-triggered animations
     const sections = document.querySelectorAll('.scan-section, .practices-section, .contact-section, .feature');
     const observer = new IntersectionObserver(entries => {
@@ -294,7 +293,7 @@
     }, { threshold: 0.1 });
     sections.forEach(section => observer.observe(section));
 
-    // Mock database for demonstration
+    // Mock database
     const productsDB = {
         "cough_syrup_123": "Authentic",
         "herbal_tea_abc": "Fake",
@@ -341,4 +340,3 @@
 
 </body>
 </html>
-
